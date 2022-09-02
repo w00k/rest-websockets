@@ -6,6 +6,7 @@
 * go get -u github.com/joho/godotenv
 * go get -u github.com/lib/pq
 * go get -u github.com/segmentio/ksuid
+* go get -u golang.org/x/crypto/bcrypt
 
 ## Patrón repositorio
 
