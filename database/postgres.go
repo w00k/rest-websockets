@@ -97,3 +97,48 @@ func (repo *PostgresRepository) InsertPost(ctx context.Context, post *models.Pos
 func (repo *PostgresRepository) Close() error {
 	return repo.db.Close()
 }
+
+// GetPostById: obtiene el post por el id el post,
+// los casos que soporta son:
+// - obtiene el post, lo retorna
+// - en caso de error, retorna un objeto post vacio y el error
+// - en caso de no encontrar el post, retorna un objeto post vacio y el error en nil
+func (repo *PostgresRepository) GetPostById(ctx context.Context, id string) (*models.Post, error) {
+	rows, err := repo.db.QueryContext(ctx, "SELECT id, post_content, created_at, user_id FROM posts WHERE id = $1", id)
+
+	defer func() {
+		err = rows.Close()
+		if err != nil {
+			log.Fatal(err)
+		}
+	}()
+
+	var post = models.Post{}
+	for rows.Next() {
+		if err = rows.Scan(&post.Id, &post.PostContent, &post.CreateAt, post.UserId); err == nil {
+			return &post, nil
+		}
+	}
+	if err = rows.Err(); err != nil {
+		return nil, err
+	}
+	return &post, nil
+}
+
+// UpdatePost: update de un post a la base de datos
+// los casos que soporta son:
+// - actualiza el post, retorna nil
+// - error al actualizar el post, retorna el error
+func (repo *PostgresRepository) UpdatePost(ctx context.Context, post *models.Post) error {
+	_, err := repo.db.ExecContext(ctx, "UPDATE posts SET post_content = $2 WHERE id = $1 and user_id = $3", post.Id, post.PostContent, post.UserId)
+	return err
+}
+
+// DeletePost: borra un post a la base de datos
+// los casos que soporta son:
+// - borra el post, retorna nil
+// - error al borrar el post, retorna el error
+func (repo *PostgresRepository) DeletePost(ctx context.Context, id string, userId string) error {
+	_, err := repo.db.ExecContext(ctx, "DELETE FROM posts WHERE id = $1 and user_id = $2", id, userId)
+	return err
+}
