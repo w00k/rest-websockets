@@ -23,7 +23,6 @@ func main() {
 	PORT := os.Getenv("PORT")
 	JWT_SECRET := os.Getenv("JWT_SECRET")
 	DATABASE_URL := os.Getenv("DATABASE_URL")
-	//PAGE := os.Getenv("PAGE")
 
 	s, err := server.NewServer(context.Background(), &server.Config{
 		Port:      PORT,

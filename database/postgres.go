@@ -4,10 +4,15 @@ import (
 	"context"
 	"database/sql"
 	"log"
+	"os"
+	"strconv"
 	"w00k/go/rest-ws/models"
 
+	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 )
+
+var configMap = make(map[string]int)
 
 type PostgresRepository struct {
 	db *sql.DB
@@ -144,7 +149,8 @@ func (repo *PostgresRepository) DeletePost(ctx context.Context, id string, userI
 }
 
 func (repo *PostgresRepository) ListPost(ctx context.Context, page uint64) ([]*models.Post, error) {
-	rows, err := repo.db.QueryContext(ctx, "SELECT id, post_content, user_id, created_at FROM posts LIMIT $1 OFFSET $2", 2, page*2)
+	pageSize := getPageSize()
+	rows, err := repo.db.QueryContext(ctx, "SELECT id, post_content, user_id, created_at FROM posts LIMIT $1 OFFSET $2", pageSize, page*uint64(pageSize))
 	if err != nil {
 		return nil, err
 	}
@@ -166,4 +172,24 @@ func (repo *PostgresRepository) ListPost(ctx context.Context, page uint64) ([]*m
 		return nil, err
 	}
 	return posts, nil
+}
+
+func getPageSize() int {
+	if value, ok := configMap["page"]; ok {
+		return value
+	}
+	page := 2
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Printf("Error loading .env file, value PAGE\n")
+		return page
+	}
+	PAGE := os.Getenv("PAGE")
+	page, err = strconv.Atoi(PAGE)
+	if err != nil {
+		log.Printf("Error with PAGE value %s, must be number\n", PAGE)
+		page = 2
+	}
+	configMap["page"] = page
+	return page
 }
