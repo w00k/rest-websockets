@@ -218,3 +218,14 @@ Response
     }
 ]
 ```
+
+### Websocket 
+- Descripción: notifica por medio de websocket la creación de los diferentes Post
+- Path */ws*
+- Method: Websocket
+
+Datos de conexión:
+```bash 
+Header -> Authorization: obtener el token del servicio login
+host: localhost:5050/ws
+```
