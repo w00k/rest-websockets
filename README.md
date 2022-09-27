@@ -229,3 +229,15 @@ Datos de conexión:
 Header -> Authorization: obtener el token del servicio login
 host: localhost:5050/ws
 ```
+
+## Crear la imagen en docker
+
+Para crear a imagen en docker, es necesario posicionarse en la carpeta raiz del proyecto (donde esta el Dockerfile) y ejecutar lo siguiente. Pero hay que tener cuidado con algo, la imagen rest-ws lee el archivo .env que contiene la ruta dirección de la base de datos, la cual es localhost, esto quiere decir que hay que modificar la ruta para que tome la dirección que está afuera de la imagen.
+```bash 
+docker build . -t rest-ws
+```
+
+Ahora para correr la imagen, en la línea de comando es necesario ejecutar lo siguiente. 
+```bash 
+docker run -p 5050:5050 rest-ws
+```
