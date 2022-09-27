@@ -87,7 +87,7 @@ Response
 
 Request
 ```bash 
-curl --location --request GET 'http://localhost:5050/me' \
+curl --location --request GET 'http://localhost:5050/api/v1/me' \
 --header 'Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyRkF5RWphVVpIaTUzRzMxeXZyQXdaaW5PR3AiLCJleHAiOjE2NjQxMjE4Nzd9.UtznSz25D4d7kSqA8G8LIO-TmamSpl5P1L_-dDEP51w'
 ```
 
@@ -102,12 +102,12 @@ Response
 
 ### Registrar un Post
 - Descripión: registra un Post, valida el token.
-- Path */post*
+- Path */api/v1/post*
 - Method: POST
 
 Request
 ```bash 
-curl --location --request POST 'http://localhost:5050/posts' \
+curl --location --request POST 'http://localhost:5050/api/v1/posts' \
 --header 'Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyRkhWWEhKbHNFcWdzbm1wUllZVFJKa0lTWFUiLCJleHAiOjE2NjQzMjE5ODJ9.yijMTmkFBj55IaVhtZ8tFZkxKSy9KwecR2959ufrSro' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -145,12 +145,12 @@ Response
 
 ### Update Post
 - Descripción: update del Post, valida el token y que el usuario que creo el Post genere esta acción.
-- Path *posts/:id*
+- Path */api/v1/posts/:id*
 - Method: PUT
 
 Request 
 ```bash 
-curl --location --request PUT 'http://localhost:5050/posts/2FAyJ9G60hL0ZAMSZoDhD9dVFp5' \
+curl --location --request PUT 'http://localhost:5050/api/v1/posts/2FAyJ9G60hL0ZAMSZoDhD9dVFp5' \
 --header 'Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyRkhWWEhKbHNFcWdzbm1wUllZVFJKa0lTWFUiLCJleHAiOjE2NjQzMjE5ODJ9.yijMTmkFBj55IaVhtZ8tFZkxKSy9KwecR2959ufrSro' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -168,12 +168,12 @@ Response
 
 ### Eliminar Post 
 - Descripción: elimia un Post utilizando el id del Post y que el usuario quien realizo el Post pueda hacerlo, valida el token.
-- Path */posts/:id*
+- Path */api/v1/posts/:id*
 - Method: DELETE
 
 Request 
 ```bash 
-curl --location --request DELETE 'http://localhost:5050/posts/2FAyJ9G60hL0ZAMSZoDhD9dVFp5' \
+curl --location --request DELETE 'http://localhost:5050/api/v1/posts/2FAyJ9G60hL0ZAMSZoDhD9dVFp5' \
 --header 'Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyRkhWWEhKbHNFcWdzbm1wUllZVFJKa0lTWFUiLCJleHAiOjE2NjQzMjE5ODJ9.yijMTmkFBj55IaVhtZ8tFZkxKSy9KwecR2959ufrSro' 
 ```
 
